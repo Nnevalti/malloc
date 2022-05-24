@@ -6,6 +6,11 @@
 # include <sys/resource.h>
 # include <unistd.h>
 
+typedef enum	e_bool {
+	FALSE,
+	TRUE
+}				t_bool;
+
 /*
 ** This allow to skip metadata
 **
@@ -26,6 +31,12 @@
 # define SMALL_HEAP_ALLOCATION_SIZE (32 * getpagesize())
 # define SMALL_BLOCK_SIZE (SMALL_HEAP_ALLOCATION_SIZE / 128)
 
+typedef enum	e_heap_group {
+	TINY,
+	SMALL,
+	LARGE
+}				t_heap_group;
+
 typedef struct	    s_heap
 {
 	struct s_heap	*prev;
@@ -41,7 +52,7 @@ typedef struct      s_block
 	struct s_block	*prev;
 	struct s_block	*next;
 	size_t			data_size;
-	t_bool			freed;
+	t_bool			free;
 }                   t_block;
 
 void    free(void *ptr);
